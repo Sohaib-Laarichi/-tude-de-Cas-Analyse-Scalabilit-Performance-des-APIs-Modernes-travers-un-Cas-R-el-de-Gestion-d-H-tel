@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package reservation;
+
+option java_multiple_files = true;
+option java_package = "com.example.grpcversion.grpc";
+option java_outer_classname = "ReservationProto";
+
+service ReservationService {
+  rpc GetReservationById (GetReservationByIdRequest) returns (GetReservationByIdResponse);
+  rpc GetAllReservations (GetAllReservationsRequest) returns (GetAllReservationsResponse);
+  rpc CreateReservation (CreateReservationRequest) returns (CreateReservationResponse);
+  rpc UpdateReservation (UpdateReservationRequest) returns (UpdateReservationResponse);
+  rpc DeleteReservation (DeleteReservationRequest) returns (DeleteReservationResponse);
+}
+
+message Client {
+  int64 id = 1;
+  string nom = 2;
+  string prenom = 3;
+  string email = 4;
+  string telephone = 5;
+}
+
+message Chambre {
+  int64 id = 1;
+  string type = 2;
+  double prix = 3;
+}
+
+message Reservation {
+  int64 id = 1;
+  Client client = 2;
+  Chambre chambre = 3;
+  string dateDebut = 4;
+  string dateFin = 5;
+  string preferences = 6;
+}
+
+message GetReservationByIdRequest {
+  int64 id = 1;
+}
+
+message GetReservationByIdResponse {
+  Reservation reservation = 1;
+}
+
+message GetAllReservationsRequest {
+}
+
+message GetAllReservationsResponse {
+  repeated Reservation reservations = 1;
+}
+
+message CreateReservationRequest {
+  int64 clientId = 1;
+  int64 chambreId = 2;
+  string dateDebut = 3;
+  string dateFin = 4;
+  string preferences = 5;
+}
+
+message CreateReservationResponse {
+  Reservation reservation = 1;
+}
+
+message UpdateReservationRequest {
+  int64 id = 1;
+  int64 clientId = 2;
+  int64 chambreId = 3;
+  string dateDebut = 4;
+  string dateFin = 5;
+  string preferences = 6;
+}
+
+message UpdateReservationResponse {
+  Reservation reservation = 1;
+}
+
+message DeleteReservationRequest {
+  int64 id = 1;
+}
+
+message DeleteReservationResponse {
+  bool success = 1;
+}
